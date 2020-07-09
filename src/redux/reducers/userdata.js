@@ -17,10 +17,16 @@ const aFalsePayload = {
     surname: "Intheman"
 }
 
-export const loadUserdata = (action$, state$, {simulGet}) => action$.pipe(
+export const loadUserdata = (action$, state$, {simulGet, simulGetWithError}) => action$.pipe(
     ofType(actionTypes.USERDATA_LOAD),
-    switchMap((action) => simulGet('httpurl', aFalsePayload)),
-    switchMap(result=> {
-        return of({type: actionTypes.USERDATA_LOAD_SUCCESS, payload: result.response});
-    })
+    switchMap((action) =>
+        simulGetWithError('httpurl', aFalsePayload).pipe(
+            switchMap(result=> {
+                return of({type: actionTypes.USERDATA_LOAD_SUCCESS, payload: result.response});
+            }),
+            catchError(err=> {
+                return of({type: actionTypes.USERDATA_LOAD_ERROR, error: err})
+            })
+        )
+    ),
 );
