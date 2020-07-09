@@ -17,6 +17,14 @@ const aFalsePayload = {
     surname: "Intheman"
 }
 
+/*
+Now I want to manage the error the same way setting a pattern
+for epics.
+Define:
+ 1. what should be done with result,
+ 2. what should be done in case of error
+ 3. which external stream function is called
+*/
 export const loadUserdata = (action$, state$, {simulGet, simulGetWithError}) => action$.pipe(
     ofType(actionTypes.USERDATA_LOAD),
     switchMap((action) =>
