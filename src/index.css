@@ -1,0 +1,6 @@
+/*
+include here the common style from a package like bootstrap,
+the ~ is resolved as node_modules, i.e.:
+
+@import "~bootstrap/dist/css/bootstrap.min.css"
+*/

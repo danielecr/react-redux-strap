@@ -1,4 +1,5 @@
 import { ajax } from 'rxjs/ajax'
+import {from } from 'rxjs';
 
 export const getViaAjax = (token, url) => {
     return (
@@ -24,4 +25,13 @@ export const postViaAjax = (token, url, data) => {
             body: data
         })
     )
+}
+
+
+// this give back the payload as if it was retrieved from remote
+// by ajax
+export const simulGet = (url, payload) => {
+    return from(new Promise((resolve,reject) => {
+        setTimeout(()=>{resolve({response:payload})}, 1200);
+    }))
 }
