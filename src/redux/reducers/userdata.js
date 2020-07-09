@@ -17,24 +17,26 @@ const aFalsePayload = {
     surname: "Intheman"
 }
 
-/*
-Now I want to manage the error the same way setting a pattern
-for epics.
-Define:
- 1. what should be done with result,
- 2. what should be done in case of error
- 3. which external stream function is called
- and action type!
-*/
+const externalStreamEpic = (actionType, streamFn, resultHandler, errorHandler) => (action$, ...args) => action$.pipe(
+    ofType(actionType),
+    mergeMap((action) => streamFn(...args).pipe(
+        switchMap(resultHandler(action, ...args)),
+        catchError(errorHandler(action, ...args))
+    ))
+);
 
-const externalStreamEpic = (actionType, streamFn, resultHandler, errorHandler) =>
-    (action$, ...args) => action$.pipe(
-        ofType(actionType),
-        mergeMap((action) => streamFn(...args).pipe(
-            switchMap(resultHandler(action, ...args)),
-            catchError(errorHandler(action, ...args))
-        ))
-    );
+
+/*
+It looks interesting ...
+but there must something more, or I think so.
+
+Every handler should work, and so that means:
+every handler must be testable.
+
+How can I get testability from here:
+inject the dependencies
+
+*/
 
 const streamFn = (state$, {simulGetWithError}) => {
     return simulGetWithError('httpurl', aFalsePayload);
