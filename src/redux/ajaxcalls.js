@@ -41,7 +41,7 @@ export const simulGetWithError = (url, payload) => {
         setTimeout(()=>{
             let b = Math.random();
             console.log('b',b);
-            if(b>0.9) {
+            if(b>0.5) {
                 resolve({response:payload});
             } else  {
                 reject({ajaxError:"errr"})

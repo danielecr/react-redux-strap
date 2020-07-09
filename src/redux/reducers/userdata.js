@@ -24,17 +24,29 @@ Define:
  1. what should be done with result,
  2. what should be done in case of error
  3. which external stream function is called
+ and action type!
 */
-export const loadUserdata = (action$, state$, {simulGet, simulGetWithError}) => action$.pipe(
-    ofType(actionTypes.USERDATA_LOAD),
-    switchMap((action) =>
-        simulGetWithError('httpurl', aFalsePayload).pipe(
-            switchMap(result=> {
-                return of({type: actionTypes.USERDATA_LOAD_SUCCESS, payload: result.response});
-            }),
-            catchError(err=> {
-                return of({type: actionTypes.USERDATA_LOAD_ERROR, error: err})
-            })
-        )
-    ),
-);
+
+const externalStreamEpic = (actionType, streamFn, resultHandler, errorHandler) =>
+    (action$, ...args) => action$.pipe(
+        ofType(actionType),
+        mergeMap((action) => streamFn(...args).pipe(
+            switchMap(resultHandler(action, ...args)),
+            catchError(errorHandler(action, ...args))
+        ))
+    );
+
+const streamFn = (state$, {simulGetWithError}) => {
+    return simulGetWithError('httpurl', aFalsePayload);
+};
+
+const resultHandler = (action, state$) => (result) => {
+    console.log(state$.value.userdata)
+    return of({type: actionTypes.USERDATA_LOAD_SUCCESS, payload: result.response});
+}
+
+const errorHandler = (action, state$) => (err) => {
+    return of({type: actionTypes.USERDATA_LOAD_ERROR, error: err})
+}
+
+export const loadUserdata = externalStreamEpic(actionTypes.USERDATA_LOAD, streamFn, resultHandler, errorHandler);
