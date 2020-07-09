@@ -16,3 +16,7 @@ To install, then run with:
 There is no support for manifest, and neither for webworker.
 
 The only built file is a `index.bundle.js` in `dist/` folder
+
+### Command to build:
+
+> npm run build
