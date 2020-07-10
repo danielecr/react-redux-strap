@@ -1,5 +1,5 @@
 import { userdataHandler } from './userdata-handler';
-import * as actionTypes from '../../actionTypes';
+import * as actionTypes from '../../../actionTypes';
 
 const ofSpy = function() {
     this.calls = [];

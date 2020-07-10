@@ -1,5 +1,6 @@
-import * as actionTypes from '../../actionTypes';
-import { externalStreamEpic } from './external-stream-pattern';
+import * as actionTypes from '../../../actionTypes';
+import { externalStreamEpic } from '../../epic-patterns';
+
 import { mapUserdataResult, errorHandler } from './userdata-handler';
 
 const initialState = {name:""};
