@@ -1,5 +1,6 @@
 import { merge, of } from 'rxjs';
-import * as actionTypes from '../../../actionTypes';
+import * as actionTypes from 'actionTypes';
+
 
 export const userdataHandler = (of) => (result, action, state$, ...args) => {
     return of({type: actionTypes.USERDATA_LOAD_SUCCESS, payload: result.response});

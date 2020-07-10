@@ -16,6 +16,11 @@
     "rxjs",
     "redux-observable"
   ],
+  "jest": {
+      "moduleNameMapper": {
+          "^actionTypes$": "<rootDir>/src/actionTypes"
+      }
+  },
   "author": "Daniele Cruciani <daniele@smartango.com>",
   "license": "MIT",
   "dependencies": {

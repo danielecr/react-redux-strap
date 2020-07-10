@@ -1,6 +1,6 @@
 import React, { Component, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import * as actionTypes from "../actionTypes";
+import * as actionTypes from "actionTypes";
 
 const Username = ({userdata}) => (
 	<p>{userdata.name} {userdata.surname}</p>

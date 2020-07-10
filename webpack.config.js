@@ -12,6 +12,11 @@ module.exports = {
     path: path.resolve("dist"),
     filename: "index.bundle.js",
   },
+  resolve: {
+      alias: {
+          actionTypes: path.resolve(__dirname, 'src/actionTypes.js')
+      }
+  },
   devtool: "source-maps",
   module: {
     rules: [
