@@ -19,12 +19,11 @@ const aFalsePayload = {
 
 const externalStreamEpic = (actionType, streamFn, resultHandler, errorHandler) => (action$, ...args) => action$.pipe(
     ofType(actionType),
-    mergeMap((action) => streamFn(...args).pipe(
+    mergeMap((action) => streamFn(...args)(action).pipe(
         switchMap(resultHandler(action, ...args)),
         catchError(errorHandler(action, ...args))
     ))
 );
-
 
 /*
 It looks interesting ...
@@ -38,17 +37,32 @@ inject the dependencies
 
 */
 
-const streamFn = (state$, {simulGetWithError}) => {
+// (little fix while going on)
+const streamFn = (state$, {simulGetWithError}) => (action) => {
+    console.log(action);
     return simulGetWithError('httpurl', aFalsePayload);
 };
 
-const resultHandler = (action, state$) => (result) => {
+const resultHandler = (of) => (action, state$, ...args) => (result) => {
     console.log(state$.value.userdata)
     return of({type: actionTypes.USERDATA_LOAD_SUCCESS, payload: result.response});
 }
+
+// this test resultHandler by injection of `of` as a spy fun
+const ofSpy = function() {
+    this.calls = [];
+    this.of = (...args) => this.calls.push(args);
+    this.getCallsN = ()=> this.calls.length
+    this.getDetails = ()=> this.calls;
+}
+
+let ofspy = new ofSpy();
+resultHandler(ofspy.of)({type:'actiontype'}, {value:{userdata:"value"}}) ({response:{unexpectedkey:"value"}});
+console.log(ofspy.getCallsN(), ofspy.getDetails());
+// end of test
 
 const errorHandler = (action, state$) => (err) => {
     return of({type: actionTypes.USERDATA_LOAD_ERROR, error: err})
 }
 
-export const loadUserdata = externalStreamEpic(actionTypes.USERDATA_LOAD, streamFn, resultHandler, errorHandler);
+export const loadUserdata = externalStreamEpic(actionTypes.USERDATA_LOAD, streamFn, resultHandler(of), errorHandler);
