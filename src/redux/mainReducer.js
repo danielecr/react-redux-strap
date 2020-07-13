@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 import { combineEpics } from "redux-observable";
-import {userdata, loadUserdata} from './reducers/userdata';
+import {userdata, loadUserdata, postUpdates} from './reducers/userdata';
 
 export const mainReducer = combineReducers({
   userdata
@@ -8,5 +8,6 @@ export const mainReducer = combineReducers({
 
 export const epics = (injected) => (...args) =>
   combineEpics(
-    loadUserdata
+    loadUserdata,
+    postUpdates
   )(...args, injected);

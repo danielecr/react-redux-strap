@@ -1,4 +1,4 @@
-import * as actionTypes from '../../../actionTypes';
+import * as actionTypes from 'actionTypes';
 import { externalStreamEpic } from '../../epic-patterns';
 
 import { mapUserdataResult, errorHandler } from './userdata-handler';
@@ -24,3 +24,23 @@ const streamFn = (action, state$, {simulGetWithError}) => {
 
 
 export const loadUserdata = externalStreamEpic(actionTypes.USERDATA_LOAD, streamFn, mapUserdataResult, errorHandler);
+
+import { from } from 'rxjs';
+
+const streamUp = (action, state$, {postViaAjax}) => {
+    console.log('action', action)
+    return postViaAjax('token','https',action)
+    return from(new Promise((resolve,reject)=> {
+        setTimeout(()=> {
+            resolve({response: {data: {affectedRow: 1}}});
+        }, 2000);
+    }))
+}
+
+const updateResult = (result, action) => {
+    console.log(result);
+    return of({type:actionTypes.USERDATA_UPDATE_SUCCESS});
+}
+
+export const postUpdates = externalStreamEpic(actionTypes.USERDATA_UPDATE,
+streamUp, updateResult, errorHandler);
