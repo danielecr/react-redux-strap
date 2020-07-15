@@ -18,7 +18,8 @@
   ],
   "jest": {
       "moduleNameMapper": {
-          "^actionTypes$": "<rootDir>/src/actionTypes"
+          "^actionTypes$": "<rootDir>/src/actionTypes",
+          "^epicPatterns$": "<rootDir>/src/redux/epic-patterns"
       }
   },
   "author": "Daniele Cruciani <daniele@smartango.com>",

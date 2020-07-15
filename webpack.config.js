@@ -14,7 +14,8 @@ module.exports = {
   },
   resolve: {
       alias: {
-          actionTypes: path.resolve(__dirname, 'src/actionTypes.js')
+          actionTypes: path.resolve(__dirname, 'src/actionTypes.js'),
+          epicPatterns: path.resolve(__dirname, 'src/redux/epic-patterns/index.js'),
       }
   },
   devtool: "source-maps",

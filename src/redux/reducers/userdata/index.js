@@ -1,5 +1,5 @@
 import * as actionTypes from 'actionTypes';
-import { externalStreamEpic } from '../../epic-patterns';
+import { externalStreamEpic } from 'epicPatterns';
 
 import { mapUserdataResult, errorHandler } from './userdata-handler';
 
