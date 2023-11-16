@@ -35,3 +35,17 @@ export const simulGet = (url, payload) => {
         setTimeout(()=>{resolve({response:payload})}, 1200);
     }))
 }
+
+export const simulGetWithError = (url, payload) => {
+    return from(new Promise((resolve,reject) => {
+        setTimeout(()=>{
+            let b = Math.random();
+            console.log('b',b);
+            if(b>0.5) {
+                resolve({response:payload});
+            } else  {
+                reject({ajaxError:"errr"})
+            }
+        }, 1200);
+    }))
+}

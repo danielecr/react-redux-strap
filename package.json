@@ -6,7 +6,7 @@
   "scripts": {
     "start": "webpack-dev-server --mode development --open",
     "build": "webpack --mode production",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "keywords": [
     "react",
@@ -16,6 +16,12 @@
     "rxjs",
     "redux-observable"
   ],
+  "jest": {
+      "moduleNameMapper": {
+          "^actionTypes$": "<rootDir>/src/actionTypes",
+          "^epicPatterns$": "<rootDir>/src/redux/epic-patterns"
+      }
+  },
   "author": "Daniele Cruciani <daniele@smartango.com>",
   "license": "MIT",
   "dependencies": {
@@ -39,6 +45,7 @@
     "webpack-cli": "^3.3.12"
   },
   "devDependencies": {
+    "jest": "^26.1.0",
     "redux-logger": "^3.0.6",
     "webpack-dev-server": "^3.11.0"
   }

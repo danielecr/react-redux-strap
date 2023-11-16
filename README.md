@@ -1,3 +1,5 @@
+> :warning: this repo is not maintained
+
 # React redux and redux-observable boilerplate
 
 A minimal package to start to develop a React application with redux
